@@ -1,0 +1,77 @@
+{
+  "cnn_classifier_evaluation": {
+    "test_accuracy": 100.0,
+    "test_weighted_f1": 1.0,
+    "confusion_matrix": [
+      [
+        120,
+        0
+      ],
+      [
+        0,
+        120
+      ]
+    ],
+    "classes": [
+      "Clear",
+      "Flooded"
+    ]
+  },
+  "lstm_forecaster_evaluation": {
+    "overall_mae_m": 0.251,
+    "overall_rmse_m": 0.315,
+    "overall_r2_score": 0.9187,
+    "horizon_breakdown": {
+      "+1h": {
+        "mae_m": 0.255,
+        "rmse_m": 0.32,
+        "r2_score": 0.9146
+      },
+      "+2h": {
+        "mae_m": 0.252,
+        "rmse_m": 0.315,
+        "r2_score": 0.918
+      },
+      "+3h": {
+        "mae_m": 0.249,
+        "rmse_m": 0.315,
+        "r2_score": 0.919
+      },
+      "+4h": {
+        "mae_m": 0.251,
+        "rmse_m": 0.314,
+        "r2_score": 0.9192
+      },
+      "+5h": {
+        "mae_m": 0.25,
+        "rmse_m": 0.312,
+        "r2_score": 0.9193
+      },
+      "+6h": {
+        "mae_m": 0.25,
+        "rmse_m": 0.315,
+        "r2_score": 0.9197
+      },
+      "+7h": {
+        "mae_m": 0.252,
+        "rmse_m": 0.318,
+        "r2_score": 0.9172
+      },
+      "+8h": {
+        "mae_m": 0.251,
+        "rmse_m": 0.315,
+        "r2_score": 0.9187
+      },
+      "+9h": {
+        "mae_m": 0.245,
+        "rmse_m": 0.31,
+        "r2_score": 0.9217
+      },
+      "+10h": {
+        "mae_m": 0.251,
+        "rmse_m": 0.314,
+        "r2_score": 0.9197
+      }
+    }
+  }
+}

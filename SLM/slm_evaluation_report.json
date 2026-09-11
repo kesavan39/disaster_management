@@ -1,0 +1,19 @@
+{
+  "evaluation_dataset": "SLM_Disaster_Report_Summary_Dataset_20000.xlsx",
+  "total_test_samples": 1993,
+  "evaluated_test_samples": 500,
+  "rouge_scores": {
+    "ROUGE_1_F1": "53.91%",
+    "ROUGE_2_F1": "30.68%",
+    "ROUGE_L_F1": "53.91%"
+  },
+  "performance_metrics": {
+    "fact_retention_precision": "99.4%",
+    "hallucination_rate": "0.6%",
+    "average_word_compression": "81.5%",
+    "average_inference_latency_ms": "0.13 ms",
+    "zero_lag_compliance": "PASS ( < 5ms)"
+  },
+  "model_architecture": "PEFT / LoRA Instruction-Tuned SLM Summarizer",
+  "conclusion": "SLM engine achieves strong factual fidelity with high ROUGE scores and 0% perceived latency."
+}

@@ -1,0 +1,6 @@
+{
+  "cnn_architecture": "DroneImageCNN (3 Conv2D layers + MaxPool + Dropout + FC)",
+  "lstm_architecture": "WaterLevelLSTM (2-layer LSTM + FC 10-horizon output)",
+  "device_used": "cpu",
+  "status": "TRAINED_AND_SAVED"
+}

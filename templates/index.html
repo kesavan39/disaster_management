@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disaster Response AI Command Center | ML + DL + NLP Engine</title>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=20260909">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="brand-title">
+        <h1>DISASTER RESPONSE AI COMMAND CENTER</h1>
+        <p>STAGE 01: ML RISK SIMULATOR &nbsp;|&nbsp; STAGE 02: DL IMAGE RESNET &nbsp;|&nbsp; STAGE 03: DAY 3 NLP TRIAGE &nbsp;|&nbsp; STAGE 04: DAY 4 SLM BRIEFING</p>
+      </div>
+    </div>
+    
+    <div class="status-badge">
+      <div class="pulse-dot"></div>
+      <span>SYSTEM LIVE &bull; ML + DL + 20K NLP + 20K SLM DATASET</span>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Section Navigation Tabs -->
+    <div class="section-tabs">
+      <button class="nav-tab active" data-target="section-ml" onclick="switchTab('section-ml')">
+        <i class="fa-solid fa-chart-pie"></i> 1. Machine Learning (ML) Analysis
+      </button>
+      <button class="nav-tab" data-target="section-dl" onclick="switchTab('section-dl')">
+        <i class="fa-solid fa-camera"></i> 2. Deep Learning (DL) Image Detection
+      </button>
+      <button class="nav-tab" data-target="section-nlp" onclick="switchTab('section-nlp')">
+        <i class="fa-solid fa-comments"></i> 3. Day 3: NLP Message Triage & NER
+      </button>
+      <button class="nav-tab" data-target="section-slm" onclick="switchTab('section-slm')">
+        <i class="fa-solid fa-file-contract"></i> 4. Day 4: SLM Disaster Report Summarizer
+      </button>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 1: MACHINE LEARNING (ML) ANALYSIS -->
+    <!-- ========================================================================= -->
+    <div class="section-panel active" id="section-ml">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-brain" style="color: var(--accent-cyan);"></i> Machine Learning Disaster Risk Analysis</h2>
+        <p>Input telemetry parameters to generate ML risk score, classification, and tactical response protocols.</p>
+      </div>
+
+      <div class="grid-2col">
+        <!-- ML Inputs -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-sliders" style="color: var(--accent-cyan);"></i> Telemetry Input Parameters</span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="ml_water_level">River Water Level (meters)</label>
+              <span class="val-display" id="val_water_level">2.5 m</span>
+            </div>
+            <input type="range" id="ml_water_level" min="0.5" max="15.0" step="0.1" value="2.5" oninput="runMLAnalysis()">
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="ml_rainfall">24-Hour Rainfall (mm)</label>
+              <span class="val-display" id="val_rainfall">60 mm</span>
+            </div>
+            <input type="range" id="ml_rainfall" min="0" max="350" step="5" value="60" oninput="runMLAnalysis()">
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="ml_calls">911 Emergency Calls (6 Hours)</label>
+              <span class="val-display" id="val_calls">8 calls</span>
+            </div>
+            <input type="range" id="ml_calls" min="0" max="50" step="1" value="8" oninput="runMLAnalysis()">
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="ml_roads">Road Closures / Blockages</label>
+              <span class="val-display" id="val_roads">1 road</span>
+            </div>
+            <input type="range" id="ml_roads" min="0" max="10" step="1" value="1" oninput="runMLAnalysis()">
+          </div>
+        </div>
+
+        <!-- ML Results -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-microchip" style="color: var(--accent-cyan);"></i> ML Risk Prediction Output</span>
+          </div>
+
+          <div class="results-container">
+            <div class="result-metric-box">
+              <div class="metric-label">PREDICTED RISK LEVEL</div>
+              <div id="ml_risk_badge" class="risk-badge badge-low">LOW RISK</div>
+            </div>
+
+            <div class="result-metric-box">
+              <div class="metric-label">CALCULATED ML RISK SCORE</div>
+              <div class="score-display" id="ml_score_val">32.5 <span style="font-size: 1rem; color: var(--text-muted);">/ 100</span></div>
+            </div>
+
+            <!-- Risk Probabilities -->
+            <div class="prob-section">
+              <div class="prob-header">Risk Level Probability Distribution</div>
+              
+              <div class="prob-row">
+                <div class="prob-label"><span>Low Risk</span><span id="prob_low_text">90%</span></div>
+                <div class="prob-bar-track"><div id="prob_low_bar" class="prob-bar-fill fill-low" style="width: 90%;"></div></div>
+              </div>
+
+              <div class="prob-row">
+                <div class="prob-label"><span>Moderate Risk</span><span id="prob_mod_text">8%</span></div>
+                <div class="prob-bar-track"><div id="prob_mod_bar" class="prob-bar-fill fill-mod" style="width: 8%;"></div></div>
+              </div>
+
+              <div class="prob-row">
+                <div class="prob-label"><span>Severe Risk</span><span id="prob_sev_text">2%</span></div>
+                <div class="prob-bar-track"><div id="prob_sev_bar" class="prob-bar-fill fill-sev" style="width: 2%;"></div></div>
+              </div>
+            </div>
+
+            <!-- Action Protocol -->
+            <div class="action-protocol-box">
+              <div class="action-header"><i class="fa-solid fa-shield-cat"></i> RECOMMENDED TACTICAL ACTION:</div>
+              <div id="ml_action_text" class="action-body">GREEN CLEAR: Normal patrol & routine monitoring.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 2: DEEP LEARNING (DL) IMAGE ANALYSIS -->
+    <!-- ========================================================================= -->
+    <div class="section-panel" id="section-dl">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-eye" style="color: var(--accent-cyan);"></i> Deep Learning (DL) Image Flood Classifier</h2>
+        <p>Provide an aerial/drone image to analyze whether the area is <strong>FLOODED</strong> or <strong>NOT FLOODED</strong> and view prediction confidence.</p>
+      </div>
+
+      <div class="grid-2col">
+        <!-- DL Image Input Card -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-cloud-arrow-up" style="color: var(--accent-cyan);"></i> Upload Aerial / Disaster Image</span>
+          </div>
+
+          <!-- Dropzone -->
+          <div class="dropzone" onclick="document.getElementById('dl_image_input').click()">
+            <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+            <h3>Click or Drag & Drop Image Here</h3>
+            <p>Upload any aerial/drone photo (.jpg, .png, .jpeg) for instant flood prediction</p>
+            <input type="file" id="dl_image_input" accept="image/*" style="display: none;" onchange="handleDLUpload(event)">
+          </div>
+
+          <!-- Image Preview -->
+          <div class="preview-wrapper" id="preview_wrapper" style="display: none;">
+            <div class="preview-label">UPLOADED IMAGE PREVIEW</div>
+            <div class="img-frame">
+              <img id="dl_img_preview" src="" alt="Uploaded Aerial Image">
+            </div>
+          </div>
+        </div>
+
+        <!-- DL Prediction Output Card -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-cyan);"></i> Deep Learning Prediction Output</span>
+          </div>
+
+          <div class="results-container">
+            <!-- Detection Result Badge -->
+            <div class="result-metric-box">
+              <div class="metric-label">CNN DETECTION STATUS</div>
+              <div id="dl_status_badge" class="risk-badge badge-severe">FLOODED</div>
+            </div>
+
+            <!-- Confidence Metric Display -->
+            <div class="result-metric-box">
+              <div class="metric-label">PREDICTION CONFIDENCE</div>
+              <div class="confidence-val" id="dl_confidence_display">98.4%</div>
+              <div class="confidence-track">
+                <div id="dl_confidence_bar" class="confidence-fill fill-sev" style="width: 98.4%;"></div>
+              </div>
+            </div>
+
+            <!-- Probability Breakdown -->
+            <div class="prob-section">
+              <div class="prob-header">CNN Class Probability Breakdown</div>
+              
+              <div class="prob-row">
+                <div class="prob-label"><span>Flooded Probability</span><span id="dl_prob_flooded_text">98.4%</span></div>
+                <div class="prob-bar-track"><div id="dl_prob_flooded_bar" class="prob-bar-fill fill-sev" style="width: 98.4%;"></div></div>
+              </div>
+
+              <div class="prob-row">
+                <div class="prob-label"><span>Not Flooded (Clear) Probability</span><span id="dl_prob_clear_text">1.6%</span></div>
+                <div class="prob-bar-track"><div id="dl_prob_clear_bar" class="prob-bar-fill fill-low" style="width: 1.6%;"></div></div>
+              </div>
+            </div>
+
+            <!-- Summary Statement -->
+            <div class="summary-box" id="dl_summary_box">
+              <i class="fa-solid fa-circle-info" style="color: var(--accent-cyan); font-size: 1.2rem;"></i>
+              <div id="dl_summary_text">
+                The PyTorch Convolutional Neural Network evaluated the aerial image and predicted <strong>FLOODED</strong> with <strong>98.4% confidence</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: DAY 3 NATURAL LANGUAGE PROCESSING (NLP) EMERGENCY TRIAGE & NER -->
+    <!-- ========================================================================= -->
+    <div class="section-panel" id="section-nlp">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-comments" style="color: var(--accent-cyan);"></i> Day 3: NLP Emergency Message Triage & Named Entity Recognition (NER)</h2>
+        <p>Analyze incoming emergency text messages across 20,000 historical records to predict urgency, disaster type, location, headcount, required resources, and tactical response actions.</p>
+      </div>
+
+      <div class="grid-2col">
+        <!-- NLP Input & Presets -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-microphone-lines" style="color: var(--accent-cyan);"></i> Emergency Voice & Text Input</span>
+          </div>
+
+          <!-- VOICE-TO-TEXT CONTROLS -->
+          <div class="voice-input-container">
+            <div class="voice-btn-row">
+              <button type="button" class="btn-voice-mic" id="btn_start_voice" onclick="toggleVoiceRecording()">
+                <i class="fa-solid fa-microphone" id="mic_icon"></i>
+                <span id="mic_btn_text">Start Voice Recording</span>
+              </button>
+
+              <button type="button" class="btn-voice-upload" onclick="document.getElementById('nlp_audio_input').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Audio (.wav, .mp3)
+              </button>
+              <input type="file" id="nlp_audio_input" accept="audio/*" style="display:none;" onchange="handleAudioUpload(event)">
+            </div>
+
+            <!-- Voice Recording Indicator & Soundwave -->
+            <div class="voice-status-banner" id="voice_status_banner" style="display: none;">
+              <div class="soundwave-anim">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+                <span class="bar bar4"></span>
+                <span class="bar bar5"></span>
+              </div>
+              <div id="voice_status_text">Listening... Speak your emergency message clearly into your microphone</div>
+            </div>
+
+            <!-- Transcribed Voice Preview Box -->
+            <div class="transcript-preview" id="transcript_preview_box" style="display: none;">
+              <i class="fa-solid fa-quote-left" style="color: var(--accent-cyan);"></i>
+              <span id="transcript_preview_text">Transcribed speech will appear here...</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:16px;">
+            <label for="nlp_message_input" style="font-weight:600; color:var(--text-main); margin-bottom:8px; display:block;">Emergency Text / Transcribed Helpline Log:</label>
+            <textarea id="nlp_message_input" rows="4" class="nlp-textarea" placeholder="Type emergency message, click microphone to speak, or upload audio file..." oninput="runNLPAnalysis()"></textarea>
+          </div>
+        </div>
+
+        <!-- NLP Output & NER Entities -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-robot" style="color: var(--accent-cyan);"></i> NLP AI Triage & Entity Extraction</span>
+          </div>
+
+          <div class="results-container">
+            
+            <!-- Urgency & Category Row -->
+            <div class="grid-2col" style="gap:12px;">
+              <div class="result-metric-box">
+                <div class="metric-label">PREDICTED URGENCY</div>
+                <div id="nlp_urgency_badge" class="risk-badge badge-severe">HIGH</div>
+                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">Confidence: <strong id="nlp_urgency_conf" style="color:var(--accent-cyan);">99.8%</strong></div>
+              </div>
+
+              <div class="result-metric-box">
+                <div class="metric-label">DISASTER CATEGORY</div>
+                <div id="nlp_disaster_type" class="category-badge">Flood</div>
+                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">Confidence: <strong id="nlp_disaster_conf" style="color:var(--accent-cyan);">98.5%</strong></div>
+              </div>
+            </div>
+
+            <!-- NER Extracted Entities Grid -->
+            <div class="ner-entity-grid">
+              <div class="entity-card">
+                <div class="entity-icon" style="color:#06b6d4;"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="entity-info">
+                  <div class="entity-label">LOCATION EXTRACTED</div>
+                  <div class="entity-val" id="nlp_location_val">Zone 2</div>
+                </div>
+              </div>
+
+              <div class="entity-card">
+                <div class="entity-icon" style="color:#ef4444;"><i class="fa-solid fa-users"></i></div>
+                <div class="entity-info">
+                  <div class="entity-label">PEOPLE AFFECTED (HEADCOUNT)</div>
+                  <div class="entity-val" id="nlp_people_val">8</div>
+                </div>
+              </div>
+
+              <div class="entity-card" style="grid-column: span 2;">
+                <div class="entity-icon" style="color:#3b82f6;"><i class="fa-solid fa-truck-medical"></i></div>
+                <div class="entity-info">
+                  <div class="entity-label">REQUIRED RESOURCE</div>
+                  <div class="entity-val" id="nlp_resource_val">rescue boat, water</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historical Similarity Match -->
+            <div class="prob-section">
+              <div class="prob-header" style="display:flex; justify-content:space-between;">
+                <span>Historical Emergency Match Similarity</span>
+                <strong id="nlp_similarity_val" style="color:var(--accent-cyan);">84.5% Match</strong>
+              </div>
+              <div class="prob-bar-track">
+                <div id="nlp_similarity_bar" class="prob-bar-fill fill-sev" style="width: 84.5%;"></div>
+              </div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:6px;">
+                Closest Historical Log: <em id="nlp_similar_msg">"8 people are trapped in Zone 2..."</em>
+              </div>
+            </div>
+
+            <!-- Recommended AI Action -->
+            <div class="action-protocol-box">
+              <div class="action-header"><i class="fa-solid fa-shield-cat"></i> AI RECOMMENDED ACTION:</div>
+              <div id="nlp_action_val" class="action-body">⚠️ RED ALERT: Prioritize high-clearance rescue boat & flood evacuation team immediately!</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 4: DAY 4 SMALL LANGUAGE MODEL (SLM) DISASTER REPORT SUMMARIZER -->
+    <!-- ========================================================================= -->
+    <div class="section-panel" id="section-slm">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-file-contract" style="color: var(--accent-cyan);"></i> Day 4: Small Language Model (SLM) Disaster Report Summarizer</h2>
+        <p>Instruction-Tuned PEFT / LoRA style SLM fine-tuned on 20,000 disaster report pairs to generate multi-tier operational briefings with zero lag and 81.5% compression ratio.</p>
+      </div>
+
+      <div class="grid-2col">
+        <!-- Full Report Input Card -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-file-lines" style="color: var(--accent-cyan);"></i> Full Disaster Coordination Report Input</span>
+            <span id="slm_word_count_badge" class="category-badge" style="font-size:0.75rem; padding:4px 12px;">0 words</span>
+          </div>
+
+          <div class="form-group">
+            <label for="slm_report_input" style="font-weight:600; color:var(--text-main); margin-bottom:8px; display:block;">Paste or Type Long Field Report (100–300+ words):</label>
+            <textarea id="slm_report_input" rows="10" class="nlp-textarea" placeholder="Paste full disaster coordination report here (e.g., 'Emergency coordination report for Zone 1. A flood incident was reported...')" oninput="runSLMSummarization()"></textarea>
+          </div>
+        </div>
+
+        <!-- Adaptive SLM Briefing Output Card -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-bolt-lightning" style="color: var(--accent-cyan);"></i> AI Generated Operational Briefing</span>
+          </div>
+
+          <div class="results-container">
+            <!-- Performance Metrics Row -->
+            <div class="grid-2col" style="gap:10px; margin-bottom:12px;">
+              <div class="result-metric-box" style="padding:10px 14px;">
+                <div class="metric-label">COMPRESSION RATIO</div>
+                <div id="slm_compression_val" style="font-size:1.3rem; font-weight:700; color:var(--accent-cyan);">0%</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">Word Count Reduction</div>
+              </div>
+
+              <div class="result-metric-box" style="padding:10px 14px;">
+                <div class="metric-label">INFERENCE LATENCY</div>
+                <div id="slm_latency_val" style="font-size:1.3rem; font-weight:700; color:var(--accent-green);">0.00 ms</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">0% Perceived Lag</div>
+              </div>
+            </div>
+
+            <!-- Single Severity-Based Adaptive Briefing Card -->
+            <div id="slm_briefing_card" class="briefing-box" style="margin-bottom:14px; background:rgba(6,182,212,0.08); border:1px solid rgba(6,182,212,0.3); border-radius:10px; padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div id="slm_tier_label" style="font-size:0.75rem; color:var(--accent-cyan); font-weight:700; letter-spacing:0.8px; text-transform:uppercase;">📋 AI ADAPTIVE BRIEFING TIER</div>
+                <div id="slm_urgency_badge" class="risk-badge badge-mod" style="font-size:0.7rem; padding:3px 10px;">MODERATE</div>
+              </div>
+              <div id="slm_briefing_text" style="font-size:0.95rem; font-weight:500; color:#ffffff; line-height:1.6;">
+                Paste a disaster report to generate a severity-adaptive summary (High: 2-Sentence Executive Brief | Moderate: 1-Sentence Field Brief | Low: 1-Line Compact Brief).
+              </div>
+            </div>
+
+            <!-- Fact Retention Matrix -->
+            <div class="ner-entity-grid">
+              <div class="entity-card">
+                <div class="entity-icon" style="color:#06b6d4;"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="entity-info">
+                  <div class="entity-label">LOCATION</div>
+                  <div class="entity-val" id="slm_fact_location">Pending Report Input</div>
+                </div>
+              </div>
+
+              <div class="entity-card">
+                <div class="entity-icon" style="color:#ef4444;"><i class="fa-solid fa-users"></i></div>
+                <div class="entity-info">
+                  <div class="entity-label">HEADCOUNT</div>
+                  <div class="entity-val" id="slm_fact_headcount">0</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}?v=20260910"></script>
+</body>
+</html>

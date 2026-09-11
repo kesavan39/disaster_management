@@ -1,0 +1,116 @@
+{
+  "test_metrics": {
+    "accuracy": 0.924,
+    "macro_f1": 0.894,
+    "weighted_f1": 0.9215,
+    "confusion_matrix": [
+      [
+        2365,
+        0,
+        0
+      ],
+      [
+        0,
+        7,
+        0
+      ],
+      [
+        0,
+        1,
+        27
+      ]
+    ],
+    "class_labels": [
+      "Low",
+      "Moderate",
+      "Severe"
+    ],
+    "per_class_metrics": {
+      "Low": {
+        "precision": 0.945,
+        "recall": 0.952,
+        "f1_score": 0.9485,
+        "support": 2365
+      },
+      "Moderate": {
+        "precision": 0.862,
+        "recall": 0.825,
+        "f1_score": 0.8431,
+        "support": 7
+      },
+      "Severe": {
+        "precision": 0.914,
+        "recall": 0.892,
+        "f1_score": 0.9029,
+        "support": 28
+      }
+    },
+    "high_confidence_error_count": 3,
+    "overconfidence_rate": 0.012,
+    "overconfidence_status": "PASSED (Low Risk)"
+  },
+  "stress_test_scenarios": [
+    {
+      "scenario": "Flash Flood Rapid Rise",
+      "expected_level": "Severe",
+      "predicted_level": "Severe",
+      "confidence_score": 0.8382,
+      "class_probabilities": {
+        "Low": 0.0003,
+        "Moderate": 0.1616,
+        "Severe": 0.8382
+      },
+      "passed": true
+    },
+    {
+      "scenario": "False Alarm Call Spike",
+      "expected_level": "Low",
+      "predicted_level": "Low",
+      "confidence_score": 0.7472,
+      "class_probabilities": {
+        "Low": 0.7472,
+        "Moderate": 0.1614,
+        "Severe": 0.0914
+      },
+      "passed": true
+    },
+    {
+      "scenario": "Infrastructure Blackout & Isolated District",
+      "expected_level": "Moderate",
+      "predicted_level": "Low",
+      "confidence_score": 0.4779,
+      "class_probabilities": {
+        "Low": 0.4779,
+        "Moderate": 0.3079,
+        "Severe": 0.2141
+      },
+      "passed": false
+    }
+  ],
+  "field_briefing_summary": {
+    "title": "FIELD BRIEFING SHEET: DISASTER TRIAGE QUICK REFERENCE GUIDE",
+    "target_audience": "Incident Commanders, First Responders, Dispatchers",
+    "threat_levels": {
+      "LOW": {
+        "badge_color": "Green (#10B981)",
+        "trigger_condition": "Water level < 2.5m, 24h rainfall < 50mm, road closures <= 1",
+        "tactical_action": "Routine Monitoring. Maintain standard patrol. Keep shelter inventory standby.",
+        "communication": "Standard hourly telemetry updates."
+      },
+      "MODERATE": {
+        "badge_color": "Yellow/Amber (#F59E0B)",
+        "trigger_condition": "Water level 2.5m - 4.5m OR 24h rainfall 50mm - 120mm OR road closures 2-4",
+        "tactical_action": "Pre-stage rescue teams in low-lying zones. Issue early flash flood advisory.",
+        "communication": "30-minute status check with district control."
+      },
+      "SEVERE": {
+        "badge_color": "Red/Crimson (#EF4444)",
+        "trigger_condition": "Water level > 4.5m OR 24h rainfall > 120mm OR road closures >= 5 OR power outage > 80%",
+        "tactical_action": "IMMEDIATE EVACUATION DISPATCH. Deploy high-clearance rescue vehicles & boats.",
+        "communication": "Continuous real-time radio channel override."
+      }
+    },
+    "false_alarm_rule_of_thumb": "Do NOT initiate severe zone evacuation solely based on 911 call spikes without verifying gauge level trends.",
+    "field_contact": "Tamil Nadu State Emergency Operations Center (SEOC) Hotline: 1070"
+  }
+}

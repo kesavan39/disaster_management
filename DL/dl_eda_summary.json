@@ -1,0 +1,43 @@
+{
+  "image_dataset_analysis": {
+    "total_flooded_images": 120,
+    "total_clear_images": 120,
+    "class_balance": "Perfect 50/50",
+    "image_resolution": "128x128 RGB",
+    "flooded_avg_channel_rgb": [
+      58.12,
+      79.7,
+      92.6
+    ],
+    "clear_avg_channel_rgb": [
+      57.95,
+      79.76,
+      55.31
+    ]
+  },
+  "timeseries_dataset_analysis": {
+    "total_time_series_records": 72874,
+    "monitoring_stations": [
+      "Kamuthi Bridge",
+      "Vembar Gauge",
+      "Grand Anicut",
+      "Srivaikuntam Dam"
+    ],
+    "districts_covered": [
+      "Ramanathapuram",
+      "Thoothukudi",
+      "Thanjavur",
+      "Tirunelveli"
+    ],
+    "water_level_stats_m": {
+      "min": 0.8,
+      "max": 31.74,
+      "mean": 3.71,
+      "std": 2.26
+    },
+    "max_rainfall_1h_mm": 46.51,
+    "max_flow_rate_m3s": 588.8,
+    "warning_level_exceeded_count": 448
+  },
+  "summary_conclusion": "Both spatial image dataset and 72,876 time-series records are ready for CNN & multi-step LSTM model training."
+}

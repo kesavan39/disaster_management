@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart City Disaster Response Command Center | Stage 01 ML Engine</title>
+  
+  <!-- Google Fonts & Font Awesome icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="brand-title">
+        <h1>DISASTER RESPONSE COMMAND CENTER</h1>
+        <p>STAGE 01: AUTONOMOUS MACHINE LEARNING TRIAGE ENGINE</p>
+      </div>
+    </div>
+    
+    <div class="status-badge">
+      <div class="pulse-dot"></div>
+      <span>SYSTEM LIVE: 38 DISTRICTS MONITORED</span>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+    <!-- Top Executive Metrics Bar -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon" style="color:#06b6d4;">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+        <div class="metric-info">
+          <h3>TOTAL DISTRICTS</h3>
+          <div class="value" id="metric_total_districts">38</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon" style="color:#ef4444;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="metric-info">
+          <h3>CRITICAL SEVERE ZONES</h3>
+          <div class="value" id="metric_severe_count">--</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon" style="color:#10b981;">
+          <i class="fa-solid fa-bullseye"></i>
+        </div>
+        <div class="metric-info">
+          <h3>MODEL ACCURACY</h3>
+          <div class="value" id="metric_model_accuracy">92.4%</div>
+        </div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-icon" style="color:#f59e0b;">
+          <i class="fa-solid fa-filter-circle-xmark"></i>
+        </div>
+        <div class="metric-info">
+          <h3>FALSE ALARM FILTERED</h3>
+          <div class="value" id="metric_false_alarm_rate">43.5%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs Header -->
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="panel-simulator">
+        <i class="fa-solid fa-sliders"></i> Real-Time Risk Simulator
+      </button>
+      <button class="tab-btn" data-tab="panel-districts">
+        <i class="fa-solid fa-table-cells"></i> District Triage Grid
+      </button>
+      <button class="tab-btn" data-tab="panel-leaderboard">
+        <i class="fa-solid fa-chart-bar"></i> Feature Leaderboard
+      </button>
+      <button class="tab-btn" data-tab="panel-stresstest">
+        <i class="fa-solid fa-flask-vial"></i> Disaster Stress-Tester
+      </button>
+      <button class="tab-btn" data-tab="panel-briefing">
+        <i class="fa-solid fa-file-invoice"></i> Responder Field Briefing
+      </button>
+    </div>
+
+    <!-- TAB 1: Real-Time Risk Simulator -->
+    <div class="tab-panel active" id="panel-simulator">
+      <div class="simulator-layout">
+        
+        <!-- Input Form Controls -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-satellite-dish" style="color:var(--accent-cyan);"></i> Live Sensor Inputs</span>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Adjust values for instant ML inference</span>
+          </div>
+
+          <div class="form-group">
+            <label>River Gauge Water Level (m) <span class="val" id="water_level_m_val">2.5</span></label>
+            <input type="range" id="water_level_m" min="0.5" max="8.0" step="0.1" value="2.5">
+          </div>
+
+          <div class="form-group">
+            <label>24-Hour Accumulated Rainfall (mm) <span class="val" id="rainfall_mm_24h_val">60</span></label>
+            <input type="range" id="rainfall_mm_24h" min="0" max="350" step="5" value="60">
+          </div>
+
+          <div class="form-group">
+            <label>Recent 911 Emergency Calls (6h) <span class="val" id="emergency_calls_6h_val">8</span></label>
+            <input type="range" id="emergency_calls_6h" min="0" max="50" step="1" value="8">
+          </div>
+
+          <div class="form-group">
+            <label>Active Infrastructure Road Closures <span class="val" id="road_closures_val">1</span></label>
+            <input type="range" id="road_closures" min="0" max="8" step="1" value="1">
+          </div>
+
+          <div class="form-group">
+            <label>Grid Power Outage Probability <span class="val" id="power_outage_probability_val">15%</span></label>
+            <input type="range" id="power_outage_probability" min="0.0" max="1.0" step="0.05" value="0.15">
+          </div>
+
+          <div class="form-group">
+            <label>Available Rescue Ambulances <span class="val" id="ambulances_available_val">6</span></label>
+            <input type="range" id="ambulances_available" min="0" max="25" step="1" value="6">
+          </div>
+
+          <div class="form-group">
+            <label>Available Shelter Beds <span class="val" id="shelter_beds_available_val">200</span></label>
+            <input type="range" id="shelter_beds_available" min="10" max="600" step="10" value="200">
+          </div>
+        </div>
+
+        <!-- ML Inference Output Box -->
+        <div class="card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-brain" style="color:var(--accent-cyan);"></i> ML Model Real-Time Triage</span>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Inference Latency: &lt; 5ms</span>
+          </div>
+
+          <div class="prediction-box">
+            <div style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">CALCULATED ZONE RISK SCORE</div>
+            <div class="score-display" id="res_score">--</div>
+            
+            <div id="res_badge" class="risk-badge-large badge-low">LOW RISK</div>
+            
+            <div style="font-size:0.85rem; color:var(--text-muted);">
+              Classifier Confidence: <strong id="res_conf" style="color:#fff;">--%</strong>
+            </div>
+
+            <!-- Probability Breakdown Bars -->
+            <div class="prob-bars">
+              <div class="prob-item">
+                <div class="prob-label"><span>Low Risk</span><span id="val_prob_low">0%</span></div>
+                <div class="prob-track"><div id="prob_low" class="prob-fill low" style="width:0%;"></div></div>
+              </div>
+              <div class="prob-item">
+                <div class="prob-label"><span>Moderate Risk</span><span id="val_prob_mod">0%</span></div>
+                <div class="prob-track"><div id="prob_mod" class="prob-fill mod" style="width:0%;"></div></div>
+              </div>
+              <div class="prob-item">
+                <div class="prob-label"><span>Severe Risk</span><span id="val_prob_sev">0%</span></div>
+                <div class="prob-track"><div id="prob_sev" class="prob-fill sev" style="width:0%;"></div></div>
+              </div>
+            </div>
+
+            <!-- Action Protocol Card -->
+            <div class="action-card">
+              <div style="font-weight:600; color:var(--accent-cyan); margin-bottom:4px;">
+                <i class="fa-solid fa-list-check"></i> RECOMMENDED COMMAND ACTION:
+              </div>
+              <div id="res_action">Initializing sensor feed inference...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: District Triage Grid -->
+    <div class="tab-panel" id="panel-districts">
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-building-shield"></i> Live 38 Tamil Nadu District Sensor Monitor</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Real-Time Sensor Snapshot</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>District</th>
+                <th>River Basin</th>
+                <th>Gauge Water (m)</th>
+                <th>24h Rain (mm)</th>
+                <th>911 Calls (6h)</th>
+                <th>Road Blockages</th>
+                <th>Risk Score</th>
+                <th>Triage Status</th>
+              </tr>
+            </thead>
+            <tbody id="districts_tbody">
+              <tr><td colspan="8" style="text-align:center; color:var(--text-muted);">Loading district telemetry...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Feature Leaderboard -->
+    <div class="tab-panel" id="panel-leaderboard">
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-ranking-star"></i> Feature Importance Leaderboard (ML Risk Predictors)</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Data-driven breakdown of top disaster predictors</span>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+          Extracted feature importances from the trained ensemble classifier showing which sensor variables drive zone risk scores.
+        </p>
+        <div id="leaderboard_container" style="max-width:800px; margin:0 auto;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Disaster Stress-Tester -->
+    <div class="tab-panel" id="panel-stresstest">
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-flask-vial"></i> Extreme Disaster Scenario Stress-Test Matrix</span>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+          Click any compound disaster scenario to inject extreme synthetic sensor telemetry into the ML triage engine and verify decision resilience.
+        </p>
+
+        <div class="stress-grid">
+          <button class="btn-stress" onclick="runStressTest('flash_flood')">
+            <h4><i class="fa-solid fa-water"></i> 1. Flash Flood Surge</h4>
+            <p>6.5m river water level, 240mm rain, 25 emergency calls, 4 road closures. Tests Severe classification trigger.</p>
+          </button>
+
+          <button class="btn-stress" onclick="runStressTest('false_alarm')">
+            <h4><i class="fa-solid fa-bell-slash"></i> 2. False Alarm Call Spike</h4>
+            <p>40 emergency calls, but normal water level (1.2m) & zero rain. Tests model false-alarm immunity (Low risk).</p>
+          </button>
+
+          <button class="btn-stress" onclick="runStressTest('blackout')">
+            <h4><i class="fa-solid fa-bolt-lightning"></i> 3. Infrastructure Blackout</h4>
+            <p>3.8m water, 95% power outage probability, 6 road blockages. Tests Moderate alert escalation.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Responder Field Briefing -->
+    <div class="tab-panel" id="panel-briefing">
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-file-pdf"></i> 1-Page Non-Technical Responder Reference Guide</span>
+          <button class="btn-print" onclick="printBriefingSheet()"><i class="fa-solid fa-print"></i> Print / Export Guide</button>
+        </div>
+        <div id="field_briefing_paper" class="briefing-paper">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

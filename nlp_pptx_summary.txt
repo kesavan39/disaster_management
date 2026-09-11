@@ -1,0 +1,265 @@
+=== PPTX SLIDES COUNT: 15 ===
+
+--- Slide 1 ---
+💬
+
+NATURAL LANGUAGE PROCESSING
+Day 3 · Disaster Response Coordination
+
+==================================================
+
+--- Slide 2 ---
+
+
+==================================================
+
+--- Slide 3 ---
+THE REAL PROBLEM
+Can a Human Read Thousands of Messages, 24/7?
+
+
+📨
+Thousands of messages
+arrive every hour across every channel
+
+
+📡
+Multiple channels
+SMS, social posts, dispatch logs, helplines
+
+
+⏱️
+A constant stream
+there is no pause button during a disaster
+
+
+⚡
+Need for instant triage
+seconds matter for the critical few
+
+INCOMING MESSAGE FEED
+
+💬 Good morning, all quiet here
+
+💬 Class is cancelled today
+
+💬 Roads are a bit wet near camp
+
+💬 Where is the relief center?
+
+🚨 HELP! 8 people trapped, water rising, Zone 2
+
+💬 Can someone confirm the boat schedule?
+
+We need a system that can read language itself and predict what matters. This is where Natural Language Processing enters the story.
+5
+
+==================================================
+
+--- Slide 4 ---
+What Is NLP?
+
+RAW
+MESSAGES
+→
+
+FIND
+PATTERNS
+→
+
+NEW
+MESSAGE
+→
+
+PREDICT
+URGENCY
+Natural Language Processing means learning patterns from past messages
+to make predictions about new ones.
+
+“just checking in, all good here”
+
+LOW RISK
+
+“heard sirens, not sure what's happening”
+
+MODERATE RISK
+
+“HELP water rising cant see street sign”
+
+SEVERE RISK
+
+If a new message uses words similar to the Severe examples, what should the model predict?
+
+==================================================
+
+--- Slide 5 ---
+LIVE DEMO — OUR TRAINED MODEL
+New Emergency Message Incoming...
+
+            “8 people are trapped in Zone 2. Water is rising rapidly. Send a rescue boat immediately.”
+↓
+
+PREDICTED URGENCY:  HIGH
+7
+
+==================================================
+
+--- Slide 6 ---
+
+
+==================================================
+
+--- Slide 7 ---
+Types of NLP Tasks
+
+==================================================
+
+--- Slide 8 ---
+
+
+==================================================
+
+--- Slide 9 ---
+NER — Core Building Blocks
+
+==================================================
+
+--- Slide 10 ---
+NEW PROBLEM
+Can We Train a Model on Messy Text?
+
+“help help oak street water”
+(duplicate)
+“help help oak street water”
+← Duplicate
+“wtr risin cnt c strt sgn hlp”
+(typos/slang)
+“ ” — no text, blank entry
+← Missing
+
+Can we directly train an
+NLP model using messy text?
+
+NO.
+
+Every NLP system needs someone to clean and annotate the text first.
+
+==================================================
+
+--- Slide 11 ---
+MEET THE ROLE
+
+🧹
+DATA ENGINEER
+
+Problem:  Raw text is messy and comes from many channels — dispatch logs, SOPs, social posts.
+
+Multiple raw text sources
+
+Remove duplicates & noise
+
+Annotate urgency labels
+
+Combine data
+
+ONE CLEAN, ANNOTATED TEXT DATASET
+
+The Data Engineer prepares clean, labeled text for the next stage.
+
+==================================================
+
+--- Slide 12 ---
+NEW PROBLEM
+Does the Vocabulary Make Sense?
+
+“everything is totally fine, no problem at all!!! HELP”
+Does this look normal? Or could this be sarcasm, a false alarm, or a mislabeled record?
+
+🔍
+EDA ENGINEER
+The EDA Engineer explores vocabulary, finds patterns, and checks suspicious or ambiguous phrasing.
+
+Clean Data
+
+Explore Vocabulary
+
+Find Ambiguity
+
+Verified Signal
+
+==================================================
+
+--- Slide 13 ---
+MEET THE ROLE
+Now our data is clean and verified. What should we do next?
+
+🧠
+NLP ENGINEER
+
+Raw Message Text
+
+Vocabulary Signals
+→
+
+NLP MODEL
+(Classifier + NER)
+→
+
+Urgency: Low/Mod/Severe
+
+Entities: Location, Resource, Headcount
+
+The NLP Engineer trains the pipeline using past data so it can read a new message.
+
+==================================================
+
+--- Slide 14 ---
+CAN WE TRUST IT?
+The pipeline is 100% correct on training logs. Should we trust it immediately?
+
+TRAINING DATA
+Model has already seen it
+
+UNSEEN TEST LOGS
+Model has never seen it
+
+NO.
+
+✅
+EVALUATION ENGINEER
+Tests the pipeline on unseen logs to check whether it really learned the pattern — or only memorized the training data.
+
+Precision / Recall
+How many urgent messages were caught correctly
+
+Overconfidence
+Model is very confident but wrong
+
+==================================================
+
+--- Slide 15 ---
+🚨 Disaster Response Command Center
+📱 Emergency Message Input: "8 people are trapped in Zone 2. Water is rising rapidly. Send a rescue boat immediately."
+
+📍 LOCATION
+Zone 2
+
+👥 PEOPLE AFFECTED
+8
+
+⚠️ PREDICTED URGENCY
+HIGH
+
+📊 SIMILARITY
+63.44%
+🚑 RESOURCE REQUIRED
+
+rescue boat, boat, water
+🤖 AI RECOMMENDED ACTION
+
+⚠️ Prioritize rescue operation immediately
+
+This is the real interface built in app.py using Streamlit — wired directly to the same trained model you just saw predict live.
+INTEGRATION ENGINEER
+
+==================================================

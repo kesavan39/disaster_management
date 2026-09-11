@@ -1,0 +1,116 @@
+[
+  {
+    "rank": 1,
+    "feature": "rainfall_mm_6h",
+    "importance": 0.214,
+    "percentage": 21.4
+  },
+  {
+    "rank": 2,
+    "feature": "rainfall_mm_24h",
+    "importance": 0.1752,
+    "percentage": 17.52
+  },
+  {
+    "rank": 3,
+    "feature": "power_outage_probability",
+    "importance": 0.1621,
+    "percentage": 16.21
+  },
+  {
+    "rank": 4,
+    "feature": "emergency_calls_6h",
+    "importance": 0.1218,
+    "percentage": 12.18
+  },
+  {
+    "rank": 5,
+    "feature": "call_surge_6h",
+    "importance": 0.0849,
+    "percentage": 8.49
+  },
+  {
+    "rank": 6,
+    "feature": "road_closures",
+    "importance": 0.0609,
+    "percentage": 6.09
+  },
+  {
+    "rank": 7,
+    "feature": "infrastructure_stress",
+    "importance": 0.058,
+    "percentage": 5.8
+  },
+  {
+    "rank": 8,
+    "feature": "estimated_exposed_population",
+    "importance": 0.053,
+    "percentage": 5.3
+  },
+  {
+    "rank": 9,
+    "feature": "resource_pressure",
+    "importance": 0.0295,
+    "percentage": 2.95
+  },
+  {
+    "rank": 10,
+    "feature": "water_level_m",
+    "importance": 0.0157,
+    "percentage": 1.57
+  },
+  {
+    "rank": 11,
+    "feature": "water_level_72h_std",
+    "importance": 0.0142,
+    "percentage": 1.42
+  },
+  {
+    "rank": 12,
+    "feature": "water_level_72h_max",
+    "importance": 0.0059,
+    "percentage": 0.59
+  },
+  {
+    "rank": 13,
+    "feature": "ambulances_available",
+    "importance": 0.0011,
+    "percentage": 0.11
+  },
+  {
+    "rank": 14,
+    "feature": "shelter_beds_available",
+    "importance": 0.0008,
+    "percentage": 0.08
+  },
+  {
+    "rank": 15,
+    "feature": "water_level_72h_avg",
+    "importance": 0.0008,
+    "percentage": 0.08
+  },
+  {
+    "rank": 16,
+    "feature": "call_density_per_10k",
+    "importance": 0.0007,
+    "percentage": 0.07
+  },
+  {
+    "rank": 17,
+    "feature": "rainfall_intensity_ratio",
+    "importance": 0.0005,
+    "percentage": 0.05
+  },
+  {
+    "rank": 18,
+    "feature": "water_level_change_6h_m",
+    "importance": 0.0004,
+    "percentage": 0.04
+  },
+  {
+    "rank": 19,
+    "feature": "rescue_teams_available",
+    "importance": 0.0004,
+    "percentage": 0.04
+  }
+]

@@ -1,0 +1,128 @@
+Shape: (20000, 10)
+Columns: ['message_id', 'message', 'disaster_type', 'urgency', 'location', 'people_affected', 'resource_required', 'recommended_action', 'source', 'is_noisy']
+
+Sample 1:
+{'message_id': 'MSG00001', 'message': 'can someone confirm the boat schedule?', 'disaster_type': 'Flood', 'urgency': 'LOW', 'location': 'Zone 2', 'people_affected': 0, 'resource_required': nan, 'recommended_action': 'Monitor situation', 'source': 'Social Media', 'is_noisy': False}
+
+Sample 2:
+{'message_id': 'MSG00002', 'message': 'URGENT: power lines are down near Harbor Area HELP!', 'disaster_type': 'Cyclone', 'urgency': 'HIGH', 'location': 'Harbor Area', 'people_affected': 39, 'resource_required': 'rescue team', 'recommended_action': 'Prioritize evacuation immediately', 'source': 'SMS', 'is_noisy': False}
+
+Sample 3:
+{'message_id': 'MSG00003', 'message': 'can someone confirm the boat schedule?', 'disaster_type': 'Earthquake', 'urgency': 'LOW', 'location': 'North Camp', 'people_affected': 0, 'resource_required': nan, 'recommended_action': 'Monitor situation', 'source': 'Mobile App', 'is_noisy': True}
+
+=== message_id ===
+message_id
+MSG00001    1
+MSG00002    1
+MSG00003    1
+MSG00004    1
+MSG00005    1
+MSG00006    1
+MSG00007    1
+MSG00008    1
+MSG00009    1
+MSG00010    1
+Name: count, dtype: int64
+
+=== message ===
+message
+everything is normal in the area                     790
+just checking in, all good here                      783
+can someone confirm the boat schedule?               780
+weather looks calm here                              779
+where is the relief center?                          771
+the situation seems stable                           771
+just asking for an update                            751
+water is getting higher but people are still safe    678
+there is heavy smoke in the distance                 667
+heard sirens, not sure what's happening              658
+Name: count, dtype: int64
+
+=== disaster_type ===
+disaster_type
+Flood                3334
+Cyclone              3334
+Earthquake           3333
+Fire                 3333
+Landslide            3333
+Medical Emergency    3333
+Name: count, dtype: int64
+
+=== urgency ===
+urgency
+LOW         7685
+MODERATE    6413
+HIGH        5902
+Name: count, dtype: int64
+
+=== location ===
+location
+East Village    2044
+North Camp      1973
+Zone 3          1655
+Zone 1          1655
+Market Road     1593
+Zone 2          1243
+Central Area    1238
+Shelter Area     889
+Hill View        806
+Zone 4           775
+Name: count, dtype: int64
+
+=== people_affected ===
+people_affected
+0     2577
+5     1840
+1     1741
+3     1684
+2     1665
+8      587
+15     580
+12     574
+6      574
+10     549
+Name: count, dtype: int64
+
+=== resource_required ===
+resource_required
+ambulance                 1973
+drinking water            1666
+rescue team               1617
+food packets              1291
+medical supplies          1011
+search team                710
+medical team               388
+power restoration team     374
+excavator                  361
+first aid kits             353
+Name: count, dtype: int64
+
+=== recommended_action ===
+recommended_action
+Monitor situation                                 7685
+Prioritize medical assistance                     1077
+Prioritize evacuation                             1033
+Send search and rescue teams                      1014
+Send an ambulance immediately                      546
+Dispatch an ambulance and rescue equipment         536
+Contain the fire and evacuate nearby residents     534
+Send a rescue boat and evacuation team             530
+Dispatch emergency supplies                        525
+Dispatch rescue and medical teams                  524
+Name: count, dtype: int64
+
+=== source ===
+source
+Helpline         4058
+SMS              4006
+Social Media     3989
+Dispatch Logs    3978
+Mobile App       3969
+Name: count, dtype: int64
+
+=== is_noisy ===
+is_noisy
+False    19920
+True        80
+Name: count, dtype: int64
+

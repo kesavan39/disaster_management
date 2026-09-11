@@ -1,0 +1,153 @@
+{
+  "total_messages_analyzed": 20000,
+  "average_words_per_message": 8.04,
+  "max_words_in_message": 15,
+  "disaster_type_frequencies": {
+    "Flood": 3334,
+    "Cyclone": 3334,
+    "Earthquake": 3333,
+    "Fire": 3333,
+    "Landslide": 3333,
+    "Medical Emergency": 3333
+  },
+  "source_channel_frequencies": {
+    "Helpline": 4058,
+    "SMS": 4006,
+    "Social Media": 3989,
+    "Dispatch Logs": 3978,
+    "Mobile App": 3969
+  },
+  "noisy_message_counts": {
+    "False": 19920,
+    "True": 80
+  },
+  "top_keywords_by_urgency": {
+    "LOW": [
+      [
+        "just",
+        1533
+      ],
+      [
+        "area",
+        1113
+      ],
+      [
+        "center",
+        821
+      ],
+      [
+        "relief",
+        821
+      ],
+      [
+        "relief center",
+        821
+      ],
+      [
+        "normal",
+        790
+      ],
+      [
+        "normal area",
+        790
+      ],
+      [
+        "checking",
+        783
+      ],
+      [
+        "good",
+        783
+      ],
+      [
+        "just checking",
+        783
+      ]
+    ],
+    "MODERATE": [
+      [
+        "near",
+        1909
+      ],
+      [
+        "people",
+        1258
+      ],
+      [
+        "need",
+        1221
+      ],
+      [
+        "zone",
+        955
+      ],
+      [
+        "road",
+        764
+      ],
+      [
+        "shelter",
+        746
+      ],
+      [
+        "safe",
+        680
+      ],
+      [
+        "getting",
+        679
+      ],
+      [
+        "getting higher",
+        679
+      ],
+      [
+        "higher",
+        679
+      ]
+    ],
+    "HIGH": [
+      [
+        "help",
+        5422
+      ],
+      [
+        "need",
+        2073
+      ],
+      [
+        "road",
+        2014
+      ],
+      [
+        "zone",
+        1867
+      ],
+      [
+        "urgent",
+        1454
+      ],
+      [
+        "alert",
+        1452
+      ],
+      [
+        "update",
+        1436
+      ],
+      [
+        "near",
+        1364
+      ],
+      [
+        "need help",
+        1349
+      ],
+      [
+        "urgently",
+        1308
+      ]
+    ]
+  },
+  "eda_conclusion": "Text signals show strong n-gram separation between LOW (inquiries), MODERATE (monitoring), and HIGH (emergency rescue requests)."
+}

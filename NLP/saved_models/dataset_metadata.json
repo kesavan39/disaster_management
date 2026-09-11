@@ -1,0 +1,38 @@
+{
+  "total_records": 20000,
+  "train_records": 16000,
+  "test_records": 4000,
+  "columns": [
+    "message_id",
+    "message",
+    "disaster_type",
+    "urgency",
+    "location",
+    "people_affected",
+    "resource_required",
+    "recommended_action",
+    "source",
+    "is_noisy",
+    "cleaned_message"
+  ],
+  "urgency_distribution": {
+    "LOW": 7685,
+    "MODERATE": 6413,
+    "HIGH": 5902
+  },
+  "disaster_type_distribution": {
+    "Flood": 3334,
+    "Cyclone": 3334,
+    "Earthquake": 3333,
+    "Fire": 3333,
+    "Landslide": 3333,
+    "Medical Emergency": 3333
+  },
+  "sources": [
+    "Social Media",
+    "SMS",
+    "Mobile App",
+    "Dispatch Logs",
+    "Helpline"
+  ]
+}

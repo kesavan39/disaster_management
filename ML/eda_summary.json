@@ -1,0 +1,147 @@
+{
+  "total_records": 12000,
+  "num_districts": 37,
+  "class_distribution": {
+    "Low": 11825,
+    "Severe": 140,
+    "Moderate": 35
+  },
+  "class_percentages": {
+    "Low": 98.54,
+    "Severe": 1.17,
+    "Moderate": 0.29
+  },
+  "leading_indicators_correlation": {
+    "rainfall_mm_6h": 0.9577,
+    "rainfall_mm_24h": 0.9453,
+    "power_outage_probability": 0.9318,
+    "emergency_calls_6h": 0.9021,
+    "road_closures": 0.8528,
+    "infrastructure_stress": 0.8417,
+    "call_surge_6h": 0.6284,
+    "estimated_exposed_population": 0.5384,
+    "resource_pressure": 0.5255,
+    "water_level_m": 0.3196,
+    "water_level_72h_std": 0.28,
+    "water_level_72h_max": 0.178,
+    "water_level_72h_avg": 0.0324,
+    "water_level_change_6h_m": 0.0281,
+    "ambulances_available": 0.0158,
+    "rescue_teams_available": 0.0101,
+    "shelter_beds_available": -0.0095,
+    "rainfall_intensity_ratio": -0.0098,
+    "call_density_per_10k": -0.1054
+  },
+  "false_alarm_diagnostics": {
+    "high_call_threshold": 4.0,
+    "median_water_level_m": 3.06,
+    "false_alarm_incidents_count": 1584,
+    "true_crisis_incidents_count": 2053,
+    "false_alarm_rate": 0.4355,
+    "avg_road_closures_in_false_alarm": 0.0,
+    "avg_road_closures_in_true_crisis": 0.46,
+    "insight": "High emergency call volume alone creates false alarms unless validated against river gauge 72h max trend & road closure logs."
+  },
+  "top_10_vulnerable_districts": [
+    {
+      "district": "Tenkasi",
+      "avg_risk_score": 5.883577712609971,
+      "max_risk_score": 100.0,
+      "max_water_level": 5.34,
+      "severe_count": 7,
+      "moderate_count": 2,
+      "total_observations": 341,
+      "severe_rate": 0.0205
+    },
+    {
+      "district": "Kallakurichi",
+      "avg_risk_score": 5.522025723472669,
+      "max_risk_score": 100.0,
+      "max_water_level": 5.55,
+      "severe_count": 5,
+      "moderate_count": 2,
+      "total_observations": 311,
+      "severe_rate": 0.0161
+    },
+    {
+      "district": "Dharmapuri",
+      "avg_risk_score": 5.435882352941176,
+      "max_risk_score": 100.0,
+      "max_water_level": 6.62,
+      "severe_count": 6,
+      "moderate_count": 1,
+      "total_observations": 323,
+      "severe_rate": 0.0186
+    },
+    {
+      "district": "Erode",
+      "avg_risk_score": 5.371879194630872,
+      "max_risk_score": 100.0,
+      "max_water_level": 6.29,
+      "severe_count": 5,
+      "moderate_count": 2,
+      "total_observations": 298,
+      "severe_rate": 0.0168
+    },
+    {
+      "district": "Kancheepuram",
+      "avg_risk_score": 5.292352941176471,
+      "max_risk_score": 100.0,
+      "max_water_level": 5.33,
+      "severe_count": 6,
+      "moderate_count": 1,
+      "total_observations": 340,
+      "severe_rate": 0.0176
+    },
+    {
+      "district": "Chennai",
+      "avg_risk_score": 5.266156156156156,
+      "max_risk_score": 97.98,
+      "max_water_level": 4.51,
+      "severe_count": 5,
+      "moderate_count": 3,
+      "total_observations": 333,
+      "severe_rate": 0.015
+    },
+    {
+      "district": "Kanniyakumari",
+      "avg_risk_score": 5.265396341463415,
+      "max_risk_score": 100.0,
+      "max_water_level": 4.53,
+      "severe_count": 5,
+      "moderate_count": 3,
+      "total_observations": 328,
+      "severe_rate": 0.0152
+    },
+    {
+      "district": "Viluppuram",
+      "avg_risk_score": 5.061167664670659,
+      "max_risk_score": 100.0,
+      "max_water_level": 5.33,
+      "severe_count": 5,
+      "moderate_count": 1,
+      "total_observations": 334,
+      "severe_rate": 0.015
+    },
+    {
+      "district": "Sivaganga",
+      "avg_risk_score": 5.056389776357828,
+      "max_risk_score": 99.62,
+      "max_water_level": 5.24,
+      "severe_count": 3,
+      "moderate_count": 1,
+      "total_observations": 313,
+      "severe_rate": 0.0096
+    },
+    {
+      "district": "Ramanathapuram",
+      "avg_risk_score": 4.993841463414634,
+      "max_risk_score": 100.0,
+      "max_water_level": 5.6,
+      "severe_count": 6,
+      "moderate_count": 0,
+      "total_observations": 328,
+      "severe_rate": 0.0183
+    }
+  ]
+}

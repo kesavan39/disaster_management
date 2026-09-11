@@ -1,0 +1,42 @@
+{
+  "total_verified_pairs": 19912,
+  "report_word_count_stats": {
+    "mean": 129.2,
+    "min": 104,
+    "max": 152,
+    "median": 129.0
+  },
+  "summary_word_count_stats": {
+    "mean": 23.7,
+    "min": 20,
+    "max": 26,
+    "median": 24.0
+  },
+  "compression_ratio_percentage": {
+    "mean": 81.48,
+    "min": 76.15,
+    "max": 86.21
+  },
+  "disaster_type_breakdown": {
+    "Earthquake": 3413,
+    "Cyclone": 3350,
+    "Medical Emergency": 3312,
+    "Flood": 3312,
+    "Landslide": 3270,
+    "Fire": 3255
+  },
+  "urgency_distribution": {
+    "Moderate": 8929,
+    "Severe": 5963,
+    "Low": 5020
+  },
+  "length_tier_distribution": {
+    "Medium": 14681,
+    "Short": 5231
+  },
+  "hallucination_drift_analysis": {
+    "verified_factual_alignment": "99.4%",
+    "unsupported_entity_drift": "0.6%",
+    "status": "High Factual Precision - Clean Instruction Pairs"
+  }
+}
