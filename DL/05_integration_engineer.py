@@ -98,14 +98,17 @@ class DLIntegrationEngineer:
 
         # Load Level 1 ML Models if available
         ml_clf_path = os.path.join(self.ml_models_dir, "risk_classifier.pkl")
+        ml_reg_path = os.path.join(self.ml_models_dir, "risk_regressor.pkl")
         ml_prep_path = os.path.join(self.ml_models_dir, "preprocessor.pkl")
         if os.path.exists(ml_clf_path) and os.path.exists(ml_prep_path):
             self.ml_classifier = joblib.load(ml_clf_path)
             self.ml_preprocessor = joblib.load(ml_prep_path)
-            print("[DL Integration Engineer] Loaded Level 1 ML Classifier.")
+            self.ml_regressor = joblib.load(ml_reg_path) if os.path.exists(ml_reg_path) else None
+            print("[DL Integration Engineer] Loaded Level 1 ML Classifier & Regressor.")
         else:
             self.ml_classifier = None
             self.ml_preprocessor = None
+            self.ml_regressor = None
 
     def register_routes(self):
         """Registers Flask API routes."""
@@ -266,8 +269,39 @@ class DLIntegrationEngineer:
             emergency_calls = float(data.get('emergency_calls_6h', 15))
             road_closures = float(data.get('road_closures', 2))
             
-            # Basic score heuristic / ML evaluation
-            ml_risk_score = min(100.0, max(0.0, (water_level_m * 8.0 + rainfall_24h * 0.25 + emergency_calls * 2.0 + road_closures * 5.0)))
+            if self.ml_regressor and self.ml_preprocessor:
+                input_dict = {
+                    'water_level_m': water_level_m,
+                    'rainfall_mm_6h': float(data.get('rainfall_mm_6h', 25.0)),
+                    'water_level_change_6h_m': 0.2,
+                    'emergency_calls_6h': emergency_calls,
+                    'road_closures': road_closures,
+                    'estimated_exposed_population': 300,
+                    'rainfall_mm_24h': rainfall_24h,
+                    'ambulances_available': 6,
+                    'rescue_teams_available': 2,
+                    'shelter_beds_available': 200,
+                    'power_outage_probability': 0.15,
+                    'water_level_72h_avg': water_level_m * 0.9,
+                    'water_level_72h_max': max(water_level_m, water_level_m + 0.3),
+                    'water_level_72h_std': 0.1,
+                    'rainfall_intensity_ratio': 25.0 / (rainfall_24h + 1e-5),
+                    'call_density_per_10k': (emergency_calls / 301.0) * 10000.0,
+                    'call_surge_6h': emergency_calls * 0.4,
+                    'infrastructure_stress': road_closures * 1.15,
+                    'resource_pressure': 300.0 / 391.0
+                }
+                feature_cols = self.ml_preprocessor['feature_cols']
+                input_df = pd.DataFrame([input_dict])[feature_cols]
+                X_scaled = self.ml_preprocessor['scaler'].transform(input_df)
+                ml_risk_score = float(self.ml_regressor.predict(X_scaled)[0])
+                ml_risk_score = max(0.0, min(100.0, round(ml_risk_score, 1)))
+            else:
+                w_norm = min(1.0, water_level_m / 10.0)
+                r_norm = min(1.0, rainfall_24h / 300.0)
+                c_norm = min(1.0, emergency_calls / 100.0)
+                rd_norm = min(1.0, road_closures / 20.0)
+                ml_risk_score = round(min(100.0, max(0.0, (w_norm * 45.0 + r_norm * 25.0 + c_norm * 20.0 + rd_norm * 10.0))), 1)
             
             # 2. CNN Status
             cnn_status = str(data.get('cnn_status', 'FLOODED')).upper()
@@ -298,30 +332,6 @@ class DLIntegrationEngineer:
         # Level 1 ML Prediction Endpoint
         @app.route('/api/predict', methods=['POST'])
         def ml_predict():
-            if not self.ml_classifier or not self.ml_preprocessor:
-                # Basic robust fallback calculation if ML pkl not loaded
-                data = request.get_json() or {}
-                water_level_m = float(data.get('water_level_m', 2.5))
-                rainfall_mm_24h = float(data.get('rainfall_mm_24h', 60.0))
-                emergency_calls = float(data.get('emergency_calls_6h', 8))
-                road_closures = float(data.get('road_closures', 1))
-                
-                score = min(100.0, max(0.0, (water_level_m * 8.0 + rainfall_mm_24h * 0.2 + emergency_calls * 2.0 + road_closures * 4.0)))
-                risk_level = "Severe" if score >= 65.0 else ("Moderate" if score >= 35.0 else "Low")
-                
-                return jsonify({
-                    "status": "success",
-                    "risk_level": risk_level,
-                    "risk_score": round(score, 1),
-                    "confidence_score": 92.4,
-                    "probabilities": {
-                        "Low": round(0.9 if risk_level == 'Low' else 0.05, 2),
-                        "Moderate": round(0.9 if risk_level == 'Moderate' else 0.05, 2),
-                        "Severe": round(0.9 if risk_level == 'Severe' else 0.05, 2)
-                    },
-                    "tactical_action": "RED ALERT: Immediate evacuation dispatch!" if risk_level == 'Severe' else ("AMBER WARNING: Pre-stage rescue units." if risk_level == 'Moderate' else "GREEN CLEAR: Routine monitoring.")
-                })
-
             data = request.get_json() or {}
             water_level_m = float(data.get('water_level_m', 2.5))
             rainfall_mm_6h = float(data.get('rainfall_mm_6h', 25.0))
@@ -366,21 +376,44 @@ class DLIntegrationEngineer:
                 'resource_pressure': resource_pressure
             }
 
-            scaler = self.ml_preprocessor['scaler']
-            label_encoder = self.ml_preprocessor['label_encoder']
-            feature_cols = self.ml_preprocessor['feature_cols']
+            if self.ml_classifier and self.ml_preprocessor:
+                scaler = self.ml_preprocessor['scaler']
+                label_encoder = self.ml_preprocessor['label_encoder']
+                feature_cols = self.ml_preprocessor['feature_cols']
 
-            input_df = pd.DataFrame([input_dict])[feature_cols]
-            X_scaled = scaler.transform(input_df)
+                input_df = pd.DataFrame([input_dict])[feature_cols]
+                X_scaled = scaler.transform(input_df)
 
-            pred_enc = self.ml_classifier.predict(X_scaled)[0]
-            probs = self.ml_classifier.predict_proba(X_scaled)[0]
-            risk_level = label_encoder.inverse_transform([pred_enc])[0]
+                pred_enc = self.ml_classifier.predict(X_scaled)[0]
+                probs = self.ml_classifier.predict_proba(X_scaled)[0]
+                risk_level = label_encoder.inverse_transform([pred_enc])[0]
 
-            prob_dict = {cname: round(float(probs[idx]), 4) for idx, cname in enumerate(label_encoder.classes_)}
-            confidence = prob_dict[risk_level]
+                prob_dict = {cname: round(float(probs[idx]), 4) for idx, cname in enumerate(label_encoder.classes_)}
+                confidence = prob_dict[risk_level]
 
-            risk_score = min(100.0, max(0.0, (water_level_m * 8.0 + rainfall_mm_24h * 0.25 + emergency_calls_6h * 2.0 + road_closures * 4.0)))
+                if self.ml_regressor:
+                    risk_score = float(self.ml_regressor.predict(X_scaled)[0])
+                    risk_score = max(0.0, min(100.0, round(risk_score, 1)))
+                else:
+                    w_norm = min(1.0, water_level_m / 10.0)
+                    r_norm = min(1.0, rainfall_mm_24h / 300.0)
+                    c_norm = min(1.0, emergency_calls_6h / 100.0)
+                    rd_norm = min(1.0, road_closures / 20.0)
+                    risk_score = round(min(100.0, max(0.0, (w_norm * 45.0 + r_norm * 25.0 + c_norm * 20.0 + rd_norm * 10.0))), 1)
+            else:
+                w_norm = min(1.0, water_level_m / 10.0)
+                r_norm = min(1.0, rainfall_mm_24h / 300.0)
+                c_norm = min(1.0, emergency_calls_6h / 100.0)
+                rd_norm = min(1.0, road_closures / 20.0)
+                
+                risk_score = round(min(100.0, max(0.0, (w_norm * 45.0 + r_norm * 25.0 + c_norm * 20.0 + rd_norm * 10.0))), 1)
+                risk_level = "Severe" if risk_score >= 65.0 else ("Moderate" if risk_score >= 35.0 else "Low")
+                confidence = 0.92
+                prob_dict = {
+                    "Low": round(0.9 if risk_level == 'Low' else 0.05, 2),
+                    "Moderate": round(0.9 if risk_level == 'Moderate' else 0.05, 2),
+                    "Severe": round(0.9 if risk_level == 'Severe' else 0.05, 2)
+                }
 
             if risk_level == 'Severe':
                 action = "RED ALERT: Immediate evacuation dispatch! Deploy high-clearance rescue vehicles & boats."

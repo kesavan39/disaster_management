@@ -20,36 +20,39 @@ function switchTab(tabId) {
 // -----------------------------------------------------------------------------
 // STAGE 01: MACHINE LEARNING (ML) ANALYSIS
 // -----------------------------------------------------------------------------
+let mlDebounceTimer = null;
 function runMLAnalysis() {
   const water = parseFloat(document.getElementById('ml_water_level').value);
   const rain = parseFloat(document.getElementById('ml_rainfall').value);
   const calls = parseFloat(document.getElementById('ml_calls').value);
   const roads = parseFloat(document.getElementById('ml_roads').value);
 
-  // Update label displays
+  // Update label displays immediately
   document.getElementById('val_water_level').innerText = `${water.toFixed(1)} m`;
   document.getElementById('val_rainfall').innerText = `${rain.toFixed(0)} mm`;
   document.getElementById('val_calls').innerText = `${calls.toFixed(0)} calls`;
   document.getElementById('val_roads').innerText = `${roads.toFixed(0)} ${roads === 1 ? 'road' : 'roads'}`;
 
-  // Call ML Prediction API
-  fetch('/api/predict', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      water_level_m: water,
-      rainfall_mm_24h: rain,
-      emergency_calls_6h: calls,
-      road_closures: roads
+  clearTimeout(mlDebounceTimer);
+  mlDebounceTimer = setTimeout(() => {
+    fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        water_level_m: water,
+        rainfall_mm_24h: rain,
+        emergency_calls_6h: calls,
+        road_closures: roads
+      })
     })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === 'success') {
-      updateMLUI(data);
-    }
-  })
-  .catch(err => console.error("ML Prediction Error:", err));
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'success') {
+        updateMLUI(data);
+      }
+    })
+    .catch(err => console.error("ML Prediction Error:", err));
+  }, 50);
 }
 
 function updateMLUI(data) {
